@@ -1,6 +1,11 @@
 #include <wiringPi.h>
 #include <wiringPiI2C.h>
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <errno.h>
+#include <unistd.h>
+#include <ctype.h>
 
 int pca9635Handle = -1;
 int pca9635Address = 0x0f;
@@ -51,9 +56,53 @@ int getBrightness(int led, int percent) {
     return min + brightness;
 }
 
+bool usage() {
+    fprintf(stderr, "usage: flashlight [-a address] \n");
+    fprintf(stderr, "a = address of pca9635\n");
 
-int main(void)
+    return false;
+}
+
+
+bool commandLineOptions(int argc, char** argv) {
+    int c, index;
+
+    if (argc < 2) {
+        return usage();
+    }
+
+    while ((c = getopt(argc, argv, "ga:dm:t:e:w:")) != -1)
+        switch (c) {
+        case 'a':
+            sscanf(optarg, "%x", &pca9635Address);
+            break;
+        case '?':
+            if (optopt == 'm' || optopt == 't')
+                fprintf(stderr, "Option -%c requires an argument.\n", optopt);
+            else if (isprint(optopt))
+                fprintf(stderr, "Unknown option `-%c'.\n", optopt);
+            else
+                fprintf(stderr, "Unknown option character \\x%x.\n", optopt);
+
+            return usage();
+        default:
+            abort();
+        }
+
+
+    //	for (int index = optind; index < argc; index++)
+    //		printf("Non-option argument %s\n", argv[index]);
+    return true;
+}
+
+int main(int argc, char **argv)
 {
+    
+    if (!commandLineOptions(argc, argv)) {
+        return 1;
+    }
+
+
     if (wiringPiSetup() != 0) {
         printf("wiringPiSetup failed\n");
         return 2;
