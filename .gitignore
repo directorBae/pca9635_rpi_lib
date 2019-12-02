@@ -7,7 +7,7 @@
 *.userosscache
 *.sln.docstates
 *.o
-*.libwiringPi*.so.*
+src/libwiringPi*.so.*
 
 example/flashlight
 
