@@ -21,7 +21,7 @@
   <PropertyGroup Label="Globals">
     <ProjectGuid>{7f9caee3-c5ac-42ca-8c8c-aa7c58a208fd}</ProjectGuid>
     <Keyword>Linux</Keyword>
-    <RootNamespace>pca9635tester</RootNamespace>
+    <RootNamespace>flashlight</RootNamespace>
     <MinimumVisualStudioVersion>15.0</MinimumVisualStudioVersion>
     <ApplicationType>Linux</ApplicationType>
     <ApplicationTypeRevision>1.0</ApplicationTypeRevision>
