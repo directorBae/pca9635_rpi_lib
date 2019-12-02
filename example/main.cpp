@@ -7,14 +7,12 @@
 #include <unistd.h>
 #include <ctype.h>
 
+#include <pca9635rpi.h>
+
 int pca9635Handle = -1;
 int pca9635Address = 0x0f;
 
 int outputEnablePin = 3;
-
-enum color {
-    RED, BLUE, GREEN, YELLOW, WHITE, _COLORS
-};
 
 int minBrightness[_COLORS] = {
     3,4,16,2,3
