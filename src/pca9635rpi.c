@@ -8,8 +8,10 @@ static int minBrightness[_COLORS] = {
     3, 4, 16, 2, 3
 };
 
+// a value of 60 burned out a yellow LED
+//  RED, BLUE, GREEN, YELLOW, WHITE, _COLORS
 static int maxBrightness[_COLORS] = {
-    10, 10, 50, 60, 22
+    10,  10,   40,    10,     22
 };
 
 static int deviceMapInitialized = FALSE;
