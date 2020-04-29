@@ -1,4 +1,4 @@
-# PCA9635 Raspberry Pi Library
+# PCA9635 Raspberry Pi Library (LED Driver)
 This library provides a good interface to access the PCA9635 chip and provides a pallete to normalize the 
 minimum and maximum brightness for different color LED's.  The example app will flash all of the output pins, 
 then flash them one at a time in succession.  
