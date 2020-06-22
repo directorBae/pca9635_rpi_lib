@@ -177,7 +177,7 @@ PCA9635_ADDRESS pca9635_getAddress(PCA9635_TYPE pin) {
     return pin >> 8;
 }
 
-PCA9635_COLOR pca9635_getPort(PCA9635_TYPE pin) {
+PCA9635_COLOR pca9635_getColor(PCA9635_TYPE pin) {
     return (0x0010 & pin) >> 4;
 }
 
