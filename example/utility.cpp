@@ -11,11 +11,10 @@
 
 int userLED = 0;
 int userBrightness = 0;
+int outputEnablePin = -1;
 
 int pca9635Handle = -1;
 int pca9635Address = 0x0f;
-
-int outputEnablePin = 3;
 
 int minBrightness[_COLORS] = {
     3,4,16,2,3
@@ -25,7 +24,7 @@ int maxBrightness[_COLORS] = {
     60,75,150,75,22
 };
 
-
+int initialize=0;
 
 int pinColor[16] = {
     WHITE,
@@ -72,16 +71,22 @@ bool commandLineOptions(int argc, char** argv) {
         return usage();
     }
 
-    while ((c = getopt(argc, argv, "a:b:p:")) != -1)
+    while ((c = getopt(argc, argv, "a:b:e:p:x")) != -1)
         switch (c) {
         case 'a':
             sscanf(optarg, "%x", &pca9635Address);
             break;
+        case 'b':
+            sscanf(optarg, "%d", &userBrightness);
+            break;
+        case 'e':
+            sscanf(optarg, "%d", &outputEnablePin);
+            break;
         case 'p':
             sscanf(optarg, "%d", &userLED);
             break;
-        case 'b':
-            sscanf(optarg, "%d", &userBrightness);
+        case 'x':
+            initialize=1; 
             break;
         case '?':
             if (optopt == 'm' || optopt == 't')
@@ -115,8 +120,10 @@ int main(int argc, char **argv)
         return 2;
     }
 
-    pinMode(outputEnablePin,OUTPUT);
-    digitalWrite(outputEnablePin, LOW);
+    if (outputEnablePin>=0) {
+      pinMode(outputEnablePin,OUTPUT);
+      digitalWrite(outputEnablePin, LOW);
+    }
 
     pca9635Handle = wiringPiI2CSetup(pca9635Address);
 
@@ -125,31 +132,32 @@ int main(int argc, char **argv)
         return 2;
     }
 
-    int mode1 = 0x01;
-    int mode2 = 0x04;
+    if (initialize) {
+      int mode1 = 0x01;
+      int mode2 = 0x04;
 
-    wiringPiI2CWriteReg8(pca9635Handle, 0x00, mode1);
-    wiringPiI2CWriteReg8(pca9635Handle, 0x01, mode2);
+      wiringPiI2CWriteReg8(pca9635Handle, 0x00, mode1);
+      wiringPiI2CWriteReg8(pca9635Handle, 0x01, mode2);
 
-    wiringPiI2CWriteReg8(pca9635Handle, 0x14, 0xaa);
-    wiringPiI2CWriteReg8(pca9635Handle, 0x15, 0xaa);
-    wiringPiI2CWriteReg8(pca9635Handle, 0x16, 0xaa);
-    wiringPiI2CWriteReg8(pca9635Handle, 0x17, 0xaa);
-    delay(1);  // mandatroy 500 us delay when enabling pca9635 oscillator 
+      wiringPiI2CWriteReg8(pca9635Handle, 0x14, 0xaa);
+      wiringPiI2CWriteReg8(pca9635Handle, 0x15, 0xaa);
+      wiringPiI2CWriteReg8(pca9635Handle, 0x16, 0xaa);
+      wiringPiI2CWriteReg8(pca9635Handle, 0x17, 0xaa);
+      delay(1);  // mandatroy 500 us delay when enabling pca9635 oscillator 
 
-    int cmode1 = wiringPiI2CReadReg8(pca9635Handle, 0x00);
-    int cmode2 = wiringPiI2CReadReg8(pca9635Handle, 0x01);
+      int cmode1 = wiringPiI2CReadReg8(pca9635Handle, 0x00);
+      int cmode2 = wiringPiI2CReadReg8(pca9635Handle, 0x01);
 
 
 
-    if (cmode1 != mode1 || cmode2 != mode2) {
-        printf("pca9635 initialization failed\n");
-        return 2;
+      if (cmode1 != mode1 || cmode2 != mode2) {
+          printf("pca9635 initialization failed\n");
+          return 2;
+      }
+
+
+      printf("initialization complete, pca9635 handle=%d\n",pca9635Handle);
     }
-
-
-    printf("initialization complete, pca9635 handle=%d\n",pca9635Handle);
-
 
 
 
