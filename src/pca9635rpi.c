@@ -54,7 +54,7 @@ int pca9635SetBrightness(int handle, int led, int color, int percent) {
     if (led<16) {
       pin=led;
     } else {
-      pin=pca9635_getPin(led);
+      pin=pca9635_getLED(led);
     }
 
     int min = minBrightness[color];
@@ -80,7 +80,7 @@ void pca9635DigitalWrite(int handle, int led, int value) {
     if (led<16) {
       pin=led;
     } else {
-      pin=pca9635_getPin(led);
+      pin=pca9635_getLED(led);
     }
 
     outputControl[deviceId][pin] = !value;
@@ -181,7 +181,7 @@ PCA9635_COLOR pca9635_getPort(PCA9635_TYPE pin) {
     return (0x0010 & pin) >> 4;
 }
 
-PCA9635_LED pca9635_getPin(PCA9635_TYPE pin) {
+PCA9635_LED pca9635_getLED(PCA9635_TYPE pin) {
     return 0x000F & pin;
 }
 

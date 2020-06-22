@@ -28,7 +28,7 @@
 
   PCA9635_ADDRESS pca9635_getAddress(PCA9635_TYPE pin);
   PCA9635_COLOR   pca9635_getPort(PCA9635_TYPE pin);
-  PCA9635_LED     pca9635_getPin(PCA9635_TYPE pin);
+  PCA9635_LED     pca9635_getLED(PCA9635_TYPE pin);
 
 #ifdef __cplusplus
 }
