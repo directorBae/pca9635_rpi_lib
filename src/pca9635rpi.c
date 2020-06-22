@@ -3,6 +3,10 @@
 #include <wiringPiI2C.h>
 #include "pca9635rpi.h"
 
+#include <stdlib.h>
+#include <string.h>
+
+static int debug=0;
 
 static int minBrightness[_COLORS] = {
     3, 4, 16, 2, 3
@@ -44,7 +48,15 @@ int getDeviceId(int handle) {
 }
 
 
-int pca9635SetBrightness(int handle, int pin, int color, int percent) {
+int pca9635SetBrightness(int handle, int led, int color, int percent) {
+    int pin;
+
+    if (led<16) {
+      pin=led;
+    } else {
+      pin=pca9635_getPin(led);
+    }
+
     int min = minBrightness[color];
     int max = maxBrightness[color];
 
@@ -60,9 +72,17 @@ int pca9635SetBrightness(int handle, int pin, int color, int percent) {
 }
 
 
-void pca9635DigitalWrite(int handle, int pin, int value) {
+void pca9635DigitalWrite(int handle, int led, int value) {
 
     int deviceId = getDeviceId(handle);
+    int pin;
+
+    if (led<16) {
+      pin=led;
+    } else {
+      pin=pca9635_getPin(led);
+    }
+
     outputControl[deviceId][pin] = !value;
 
     int regValue    = 0;
@@ -115,5 +135,53 @@ int pca9635Setup(int address) {
     delayMicroseconds(500);  // mandatroy 500 us delay when enabling pca9635 oscillator 
 
     return handle;
+}
+
+PCA9635_TYPE pca9635_getType(PCA9635_ADDRESS address, PCA9635_COLOR color, PCA9635_LED led) {
+    return (address << 8) | ((0x01 & color) << 4) | (0x0F & led);
+}
+
+
+PCA9635_TYPE pca9635_getTypeFromENV(const char* var) {
+    if (!var) {
+        fprintf(stderr, "Could not locate NULL in the environment variables\n");
+        exit(EXIT_FAILURE);
+    }
+    if (getenv(var)) {
+        int address;
+        int color;
+        int led;
+        int offset = 0;
+
+        if (strncmp(getenv(var), "0x", 2) == 0) {
+            offset = 2;
+        }
+
+        sscanf(getenv(var) + offset, "%x_%d_%d", &address, &color, &led);
+        
+        if (debug) {
+          printf("setting up pca9635 pin on address=%02x, color=%c, led=%d\n", address, color, led);
+        }
+
+        PCA9635_TYPE value = pca9635_getType(address, color, led);
+
+        return value;
+    }
+    else {
+        fprintf(stderr, "Could not locate '%s' in the environment variables\n", var);
+        exit(EXIT_FAILURE);
+    }
+}
+
+PCA9635_ADDRESS pca9635_getAddress(PCA9635_TYPE pin) {
+    return pin >> 8;
+}
+
+PCA9635_COLOR pca9635_getPort(PCA9635_TYPE pin) {
+    return (0x0010 & pin) >> 4;
+}
+
+PCA9635_LED pca9635_getPin(PCA9635_TYPE pin) {
+    return 0x000F & pin;
 }
 
