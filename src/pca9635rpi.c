@@ -137,7 +137,7 @@ int pca9635Setup(int address) {
     return handle;
 }
 
-PCA9635_TYPE pca9635_getType(PCA9635_ADDRESS address, PCA9635_COLOR color, PCA9635_LED led) {
+PCA9635_TYPE pca9635_getType(PCA9635_ADDRESS address, enum PCA9635_COLOR color, PCA9635_LED led) {
     return (address << 8) | ((0x01 & color) << 4) | (0x0F & led);
 }
 
@@ -177,7 +177,7 @@ PCA9635_ADDRESS pca9635_getAddress(PCA9635_TYPE pin) {
     return pin >> 8;
 }
 
-PCA9635_COLOR pca9635_getColor(PCA9635_TYPE pin) {
+enum PCA9635_COLOR pca9635_getColor(PCA9635_TYPE pin) {
     return (0x0010 & pin) >> 4;
 }
 
