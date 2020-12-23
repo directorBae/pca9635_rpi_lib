@@ -9,15 +9,17 @@ Copyright (c) 2019 Wade Ryan
 
 ## Advantages
 
-1) Designed for LED’s.  No resitor required for Ultra bright LED.
+1) Designed for LED’s.  No resitor required for most ultra bright LED's
 2) Each individual LED brightness can be set via PWM settings
 3) PWM output can be used with LN298
 4) Comes in very compact TSSOP28 package
+5) Cousin to pca 9685servo driver
 
 ## Disadvantages
 
 1) No DIP package; Currently only comes in TSSOP28 package
 2) More complex than mcp23017
+3) No input channels (but is that really a disadvantage?)
 3) No CLI (yet)
 4) Not for use with individually Addressable LED's
 
@@ -39,6 +41,8 @@ and install the library.
 
 
 ## Compiling
+
+
 Complie your applications using these command line arguments: -lwiringPi -lwiringPiADS1115rpi
 
 
@@ -54,3 +58,6 @@ To run the example program, nagaviate into the example folder and use make to co
     $ .0123456789abcdef
     $ (etc.)
 
+## Datasheet
+
+https://www.nxp.com/docs/en/data-sheet/PCA9635.pdf
