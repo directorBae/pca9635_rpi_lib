@@ -3,8 +3,10 @@ This library provides a good interface to access the PCA9635 chip and provides a
 minimum and maximum brightness for different color LED's.  The example app will flash all of the output pins, 
 then flash them one at a time in succession.  To do:  Add user adjustable pallets. Copyright (c) 2019 Wade Ryan
 
-[![youtube](https://raw.githubusercontent.com/wryan67/pca9635_rpi_lib/master/readme/019bc8207c1f0a39a02d8d04ec7d9c1b2853528374.jpg)]
-(https://youtu.be/3eD2izIp9V0)
+[[video demo]](https://www.youtube.com/watch?v=3eD2izIp9V0)
+
+![youtube](https://raw.githubusercontent.com/wryan67/pca9635_rpi_lib/master/readme/019bc8207c1f0a39a02d8d04ec7d9c1b2853528374.jpg)
+
 
 
 ## Advantages
