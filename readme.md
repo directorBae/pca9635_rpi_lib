@@ -1,11 +1,11 @@
 # PCA9635 Raspberry Pi Library (LED Driver)
 This library provides a good interface to access the PCA9635 chip and provides a pallete to normalize the 
 minimum and maximum brightness for different color LED's.  The example app will flash all of the output pins, 
-then flash them one at a time in succession.  
+then flash them one at a time in succession.  To do:  Add user adjustable pallets. Copyright (c) 2019 Wade Ryan
 
-To do:  Add user adjustable pallets. 
+[![youtube](https://raw.githubusercontent.com/wryan67/pca9635_rpi_lib/master/readme/019bc8207c1f0a39a02d8d04ec7d9c1b2853528374.jpg)]
+(https://youtu.be/3eD2izIp9V0)
 
-Copyright (c) 2019 Wade Ryan
 
 ## Advantages
 
@@ -63,3 +63,9 @@ To run the example program, nagaviate into the example folder and use make to co
 ## Datasheet
 
 https://www.nxp.com/docs/en/data-sheet/PCA9635.pdf
+
+## Image Examples
+
+![thumbnail](https://raw.githubusercontent.com/wryan67/pca9635_rpi_lib/master/readme/01e6371a6b3c24da8f20fca597b51f3df463bc9977.jpg)
+![thumbnail](https://raw.githubusercontent.com/wryan67/pca9635_rpi_lib/master/readme/010bee18222c653b292e93cf0a633da69b42196203.jpg)
+![thumbnail](https://raw.githubusercontent.com/wryan67/pca9635_rpi_lib/master/readme/012c4432a93cb18264a192203006472d6bfb3eff69.jpg)
