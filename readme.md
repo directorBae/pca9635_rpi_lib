@@ -7,6 +7,19 @@ To do:  Add user adjustable pallets.
 
 Copyright (c) 2019 Wade Ryan
 
+## Advantages
+
+1) Designed for LED’s.  No resitor required for Ultra bright LED.
+2) Each individual LED brightness can be set via PWM settings
+3) PWM output can be used with LN298
+4) Comes in very compact TSSOP28 package
+
+## Disadvantages
+
+1) No DIP package; Currently only comes in TSSOP28 package
+2) More complex than mcp23017
+3) No CLI (yet)
+4) Not for use with individually Addressable LED's
 
 ## Requirements
 On your Raspberry Pi, please use the raspi-config program to enable the I2C interface.
