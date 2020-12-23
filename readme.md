@@ -12,6 +12,8 @@ Copyright (c) 2019 Wade Ryan
 1) Designed for LED’s.  No resitor required for most ultra bright LED's
 2) Each individual LED brightness can be set via PWM settings
 3) PWM output can be used with LN298
+3) High speed 97 kHz clock which prevents LED flickering
+3) 7 hardware address pins allow 126 devices to be connected to the same I2C-bus
 4) Comes in very compact TSSOP28 package
 5) Cousin to pca 9685servo driver
 
