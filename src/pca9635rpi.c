@@ -47,6 +47,9 @@ int getDeviceId(int handle) {
     return -1;
 }
 
+int pca9635SetDutyCycle(int handle, int pin, int percent) {
+    return wiringPiI2CWriteReg8(handle, 0x02 + pin, percent);
+}
 
 int pca9635SetBrightness(int handle, int led, int color, int percent) {
     int pin;
