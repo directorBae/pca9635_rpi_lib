@@ -11,54 +11,20 @@
 
 int userLED = 0;
 int userBrightness = 0;
-int outputEnablePin = -1;
 
 int pca9635Handle = -1;
 int pca9635Address = 0x0f;
 
-int minBrightness[_COLORS] = {
-    3,4,16,2,3
-};
-
-int maxBrightness[_COLORS] = {
-    60,75,150,75,22
-};
-
 int initialize=0;
 
-int pinColor[16] = {
-    WHITE,
-    WHITE,
-    WHITE,
-    WHITE,
-    RED,
-    RED,
-    RED,
-    RED,
-    BLUE,
-    BLUE,
-    BLUE,
-    BLUE,
-    GREEN,
-    GREEN,
-    GREEN,
-    GREEN
-};
 
-int getBrightness(int led, int percent) {
-    int min = minBrightness[pinColor[led]];
-    int max = maxBrightness[pinColor[led]];
-
-    int delta = max - min;
-
-    int brightness = (percent / 100.0) * delta;
-
-    return min + brightness;
-}
 
 bool usage() {
-    fprintf(stderr, "usage: pca9635 [-a address] -p PIN -b brightness\n");
+    fprintf(stderr, "usage: pca9635 [options]\n");
+    fprintf(stderr, "x = initialize device\n");
     fprintf(stderr, "a = address of pca9635\n");
+    fprintf(stderr, "p = pin (0-16)\n");
+    fprintf(stderr, "b = brightness (0-254)\n");
 
     return false;
 }
@@ -78,9 +44,6 @@ bool commandLineOptions(int argc, char** argv) {
             break;
         case 'b':
             sscanf(optarg, "%d", &userBrightness);
-            break;
-        case 'e':
-            sscanf(optarg, "%d", &outputEnablePin);
             break;
         case 'p':
             sscanf(optarg, "%d", &userLED);
@@ -120,10 +83,6 @@ int main(int argc, char **argv)
         return 2;
     }
 
-    if (outputEnablePin>=0) {
-      pinMode(outputEnablePin,OUTPUT);
-      digitalWrite(outputEnablePin, LOW);
-    }
 
     pca9635Handle = wiringPiI2CSetup(pca9635Address);
 
