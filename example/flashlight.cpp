@@ -10,7 +10,7 @@
 #include <pca9635rpi.h>
 
 int pca9635Handle = -1;
-int pca9635Address = 0x0f;
+int pca9635Address = 0x70;
 
 int outputEnablePin = 3;
 
@@ -134,6 +134,7 @@ int main(int argc, char **argv)
 
 
     if (cmode1 != mode1 || cmode2 != mode2) {
+	    printf("cmode1: %d, mode1: %d, cmode2: %d, mode2: %d ", cmode1, mode1, cmode2, mode2);
         printf("pca9635 initialization failed\n");
         return 2;
     }
@@ -148,12 +149,12 @@ int main(int argc, char **argv)
 
 
     for (int led = 0; led < 16; ++led) {
-        wiringPiI2CWriteReg8(pca9635Handle, 0x02 + led, maxBrightness[pinColor[led]]);
+        wiringPiI2CWriteReg8(pca9635Handle, 0x20 + led, maxBrightness[pinColor[led]]);
     }
     delay(500);
 
     for (int led = 0; led < 16; ++led) {
-        wiringPiI2CWriteReg8(pca9635Handle, 0x02 + led, minBrightness[pinColor[led]]);
+        wiringPiI2CWriteReg8(pca9635Handle, 0x20 + led, minBrightness[pinColor[led]]);
     }
 
     delay(500);
@@ -166,15 +167,15 @@ int main(int argc, char **argv)
         printf("."); fflush(stdout);
         for (brightness = 0; brightness < 100; brightness+=2) {
             for (led = 0; led < 16; ++led) {
-                wiringPiI2CWriteReg8(pca9635Handle, 0x02 + led, getBrightness(led,brightness));
-            }
+                wiringPiI2CWriteReg8(pca9635Handle, 0x20 + led, getBrightness(led,brightness));
+	    }
             delay(2);
         }
         delay(500);
 
         for (brightness = 100; brightness > 0 ; brightness-=2) {
             for (led = 0; led < 16; ++led) {
-                wiringPiI2CWriteReg8(pca9635Handle, 0x02 + led, getBrightness(led, brightness));
+                wiringPiI2CWriteReg8(pca9635Handle, 0x20 + led, getBrightness(led, brightness));
             }
         }
         delay(500);
@@ -183,11 +184,11 @@ int main(int argc, char **argv)
         for (led = 0; led < 16; ++led) {
             printf("%x", led); fflush(stdout);
             for (brightness = 0; brightness < 100; brightness += 2) {
-                wiringPiI2CWriteReg8(pca9635Handle, 0x02 + led, getBrightness(led, brightness));
+                wiringPiI2CWriteReg8(pca9635Handle, 0x20 + led, getBrightness(led, brightness));
             }
             delay(500);
             for (brightness = 100; brightness > 0; brightness -= 2) {
-                wiringPiI2CWriteReg8(pca9635Handle, 0x02 + led, getBrightness(led, brightness));
+                wiringPiI2CWriteReg8(pca9635Handle, 0x20 + led, getBrightness(led, brightness));
             }
             delay(500);
         }
